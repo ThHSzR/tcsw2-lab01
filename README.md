@@ -1,98 +1,140 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Plataforma de Cursos - API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Backend da Plataforma de Cursos Online desenvolvido com NestJS, TypeScript, Prisma ORM e PostgreSQL.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+O projeto contém a API REST inicial de usuários e o modelo relacional da plataforma, preparado para a futura integração com o frontend em React e TypeScript.
 
-## Description
+## Tecnologias
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- Node.js
+- NestJS
+- TypeScript
+- Prisma ORM
+- PostgreSQL
+- Swagger/OpenAPI
+- Jest
 
-## Project setup
+## Modelo de dados
 
-```bash
-$ npm install
-```
+O schema Prisma contempla as seguintes áreas:
 
-## Compile and run the project
+- **Core:** usuários, categorias e cursos;
+- **Conteúdo:** módulos e aulas;
+- **Interação:** matrículas, progresso de aulas e avaliações;
+- **Curadoria:** trilhas, cursos das trilhas e certificados;
+- **Negócio:** planos, assinaturas e pagamentos.
 
-```bash
-# development
-$ npm run start
+O modelo `User` original permanece temporariamente no schema para manter compatibilidade com o módulo atual de usuários. A integração dele com o novo modelo `Usuario` será realizada em uma etapa posterior.
 
-# watch mode
-$ npm run start:dev
+## Pré-requisitos
 
-# production mode
-$ npm run start:prod
-```
+- Node.js 20 ou superior;
+- npm;
+- PostgreSQL disponível local ou remotamente.
 
-## Run tests
+## Instalação
+
+Clone o repositório e instale as dependências:
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+git clone https://github.com/ThHSzR/tcsw2-lab01.git
+cd tcsw2-lab01
+npm install
 ```
 
-## Deployment
+## Configuração do banco
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+Crie um arquivo `.env` na raiz do projeto:
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+```env
+DATABASE_URL="postgresql://usuario:senha@localhost:5432/plataforma_cursos?schema=public"
+PORT=3000
+```
+
+Substitua usuário, senha, porta e banco pelos dados da sua instalação do PostgreSQL.
+
+Gere o Prisma Client e aplique as migrações:
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+npx prisma generate
+npx prisma migrate dev
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+Para apenas aplicar migrações em um ambiente de execução, sem criar novas migrações:
 
-## Resources
+```bash
+npx prisma migrate deploy
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+## Executando a aplicação
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+```bash
+# Desenvolvimento
+npm run start:dev
 
-## Support
+# Execução normal
+npm run start
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+# Build de produção
+npm run build
+npm run start:prod
+```
 
-## Stay in touch
+A API será disponibilizada em `http://localhost:3000` por padrão.
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## Documentação da API
 
-## License
+Com a aplicação em execução, acesse o Swagger:
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+```text
+http://localhost:3000/api
+```
+
+Atualmente, o módulo REST disponível é o de usuários. Os endpoints das novas entidades serão adicionados durante a integração das próximas etapas.
+
+## Visualizando as tabelas
+
+Para abrir uma interface gráfica com as tabelas e registros do banco:
+
+```bash
+npx prisma studio
+```
+
+O Prisma Studio ficará disponível normalmente em `http://localhost:5555`.
+
+## Testes e validação
+
+```bash
+# Testes unitários
+npm test
+
+# Testes end-to-end
+npm run test:e2e
+
+# Cobertura
+npm run test:cov
+
+# Validar o schema Prisma
+npx prisma validate
+```
+
+## Estrutura principal
+
+```text
+prisma/
+  migrations/        Migrações SQL do banco
+  schema.prisma      Entidades, relações e restrições
+src/
+  generated/prisma/  Cliente Prisma gerado
+  prisma/            Serviço e módulo de acesso ao banco
+  users/             API REST atual de usuários
+  app.module.ts      Módulo principal da aplicação
+  main.ts            Inicialização e configuração do Swagger
+```
+
+## Próximas etapas
+
+- Integrar o modelo legado `User` ao modelo acadêmico `Usuario`;
+- Implementar módulos, serviços e controllers para as novas entidades;
+- Adicionar autenticação e autorização;
+- Integrar o backend ao frontend React com TypeScript e Bootstrap.
